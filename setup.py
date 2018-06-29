@@ -9,7 +9,7 @@ with open("./README.md") as readme:
     readme_text = readme.read()
 
 with popen("git describe --tags --dirty | cut -c2-", "r") as git_output:
-    git_version_string = git_output.read()
+    git_version_string = git_output.readline()[:-1]  # truncate the \n
 
     # update version file
     with open("tpl/__version__.py", "w") as v:
@@ -29,5 +29,6 @@ setup(
     install_requires=["pyyaml", "jinja2"],
     entry_points={
         'console_scripts': ["tpl=tpl:main"]
-    }
+    },
+    packages=["tpl"]
 )

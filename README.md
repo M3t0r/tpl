@@ -5,7 +5,8 @@ You want to fill data into a template file?
 tpl --yaml data.yaml template.file > rendered.file
 ```
 
-You have everything already set up in your environment and now you just want to POST it somewhere?
+You have everything already set up in your environment and now you just want to
+POST it somewhere?
 ```shell
 tpl structure.json | curl -X POST -H "Content-Type: application/json" -d@- httpbin.org/anything
 ```
@@ -22,8 +23,12 @@ make install
  * JSON files (`--json <file>`)
  * environment variables (`--environment`)
 
-You can specify multiple sources at once, but if a key is present in more than one the it's value will be taken from the source that's given latter.
-This can be useful if you have default values that you want to always be present:
+You can specify multiple sources at once, but if a key is present in more than
+one then it's value will be taken from the latter source. This can be useful if
+you have default values that you want to always be present:
 ```bash
-tpl --yaml defaults.yaml --json <(curl -H "Content-Type: application/json" now.httpbin.org) template.jinja2 > results.html
+tpl \
+  --yaml defaults.yaml \
+  --json <(curl -H "Content-Type: application/json" now.httpbin.org) \
+  template.jinja2 > results.html
 ```

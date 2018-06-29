@@ -1,6 +1,17 @@
+# builder
+FROM python:3-alpine AS zipper
+
+RUN apk update && apk add make
+
+COPY ./ /app
+RUN make -C /app dist/tpl
+
+# final image
 FROM python:3-alpine
 
-COPY dist/tpl /usr/bin/tpl
+COPY --from=zipper /app/dist/tpl /usr/bin/tpl
 RUN ln -s /usr/bin/tpl /entrypoint
 
-CMD ["tpl", "--environment", "-","-"]
+ENTRYPOINT ["tpl"]
+
+CMD ["--environment", "-","-"]

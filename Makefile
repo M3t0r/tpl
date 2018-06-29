@@ -6,7 +6,10 @@ test:
 	-flake8 tpl/
 	#pytest
 
-all: test $(DistFolder)/tpl
+all: test $(DistFolder)/tpl docker
+
+docker: $(DistFolder)/tpl Dockerfile
+	docker build -t "tpl:v`./setup.py -V`" ./
 
 install: $(SourceFiles)
 	python -m pip install ./

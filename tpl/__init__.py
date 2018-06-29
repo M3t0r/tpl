@@ -68,6 +68,7 @@ def main():
     # and render to output
     with open_file(arguments[1], "w") as output:
         template.stream(collated_data).dump(output)
+        output.write("\n") # does the template eat this or the dump call?
 
     return os.EX_OK
 

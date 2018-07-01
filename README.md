@@ -1,5 +1,4 @@
 # `tpl`: Render templates with data from various sources
-
 You want to fill data into a template file?
 ```shell
 tpl --yaml data.yaml template.file > rendered.file
@@ -21,7 +20,6 @@ echo "My go-to editor is {{VISUAL}} on {{OS}}" \
 `make install` or `pip install git+git://github.com/M3t0r/tpl.git`
 
 ## Input sources
-
 `tpl` supports multiple sources:
  * YAML files (`--yaml <file>`)
  * JSON files (`--json <file>`)
@@ -35,4 +33,17 @@ tpl \
   --yaml defaults.yaml \
   --json <(curl -H "Content-Type: application/json" now.httpbin.org) \
   template.jinja2 > results.html
+```
+
+# Usage
+```
+Usage:
+  tpl [options] <template_file>
+  tpl --help
+  tpl --version
+
+Options:
+  -e, --environment    Use all environment variables as data
+  --json=<file>        Load JSON data from a file or STDIN
+  --yaml=<file>        Load YAML data from a file or STDIN
 ```

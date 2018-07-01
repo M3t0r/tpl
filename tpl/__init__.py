@@ -30,6 +30,7 @@ def main():
     # fail early if no template was specified
     if len(arguments) < 1:
         logger.error("No template file was specified.")
+        print_usage()
         return os.EX_USAGE
 
     # if only one argument is given use STDOUT
@@ -68,17 +69,25 @@ def main():
     # and render to output
     with open_file(arguments[1], "w") as output:
         template.stream(collated_data).dump(output)
-        output.write("\n") # does the template eat this or the dump call?
+        output.write("\n")  # does the template eat this or the dump call?
 
     return os.EX_OK
 
 
+def print_usage():
+    print("""Usage:
+  tpl [options] <template_file>
+  tpl --help
+  tpl --version""")
+
+
 def print_help():
-    text = ("""Usage:
-  {executable} [options] <template>
-  {executable} --help
-  {executable} --version""")
-    print(text.format(executable=sys.argv[0]))
+    print_usage()
+    print("""
+Options:
+  -e, --environment    Use all environment variables as data
+  --json=<file>        Load JSON data from a file or STDIN
+  --yaml=<file>        Load YAML data from a file or STDIN""")
 
 
 def print_version():

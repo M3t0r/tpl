@@ -11,10 +11,14 @@ POST it somewhere?
 tpl structure.json | curl -X POST -H "Content-Type: application/json" -d@- httpbin.org/anything
 ```
 
-## Installation
+You want to fill in a template in your CD pipeline and have access to docker?
 ```shell
-make install
+echo "My go-to editor is {{VISUAL}} on {{OS}}" \
+  | docker run --rm -i -e "VISUAL" -e "OS=$(uname)" m3t0r/tpl -
 ```
+
+## Installation
+`make install` or `pip install git+git://github.com/M3t0r/tpl.git`
 
 ## Input sources
 
@@ -26,7 +30,7 @@ make install
 You can specify multiple sources at once, but if a key is present in more than
 one then it's value will be taken from the latter source. This can be useful if
 you have default values that you want to always be present:
-```bash
+```shell
 tpl \
   --yaml defaults.yaml \
   --json <(curl -H "Content-Type: application/json" now.httpbin.org) \

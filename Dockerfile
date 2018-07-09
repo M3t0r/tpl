@@ -10,7 +10,6 @@ RUN make -C /app dist/tpl
 FROM python:3-alpine
 
 COPY --from=zipper /app/dist/tpl /usr/bin/tpl
-RUN ln -s /usr/bin/tpl /entrypoint
 
 ENTRYPOINT ["tpl"]
 

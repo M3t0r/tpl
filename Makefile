@@ -3,8 +3,8 @@ BuildFolder := ./build
 SourceFiles := setup.py ./tpl/*.py
 
 test:
-	-flake8 tpl/
-	#pytest
+	-flake8 tpl/ tests/
+	pytest ./tests
 
 all: test $(DistFolder)/tpl docker
 

@@ -78,7 +78,7 @@ def print_usage():
     print("""Usage:
   tpl [options] <template_file>
   tpl --help
-  tpl --version""")
+  tpl --version""", file=sys.stderr)
 
 
 def print_help():
@@ -87,13 +87,15 @@ def print_help():
 Options:
   -e, --environment    Use all environment variables as data
   --json=<file>        Load JSON data from a file or STDIN
-  --yaml=<file>        Load YAML data from a file or STDIN""")
+  --yaml=<file>        Load YAML data from a file or STDIN""", file=sys.stderr)
 
 
 def print_version():
+    # Although help and usage appear on STDERR, the version goes to STDOUT.
+    # This is the same way that `less` does it under macOS, even though thats
+    # probably not a good reason.
     from .__version__ import __version__
-    executable = sys.argv[0]
-    print(f"{executable} - {__version__}")
+    print(f"tpl - {__version__}")
 
 
 def parse_input_options(type, file):

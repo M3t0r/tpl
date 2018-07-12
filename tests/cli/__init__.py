@@ -9,9 +9,6 @@ import pytest
 import yaml
 
 
-# For common exit codes see `man 3 sysexits`
-
-
 EXECUTION_TIMEOUT = 2  # seconds
 
 
@@ -57,7 +54,7 @@ class CLI:
         else:
             print()
 
-        print("-"*24)
+        print("-" * 24)
 
         print(stream, end="")
 
@@ -66,7 +63,7 @@ class CLI:
         if len(stream) > 0 and stream[-1] != "\n":
             print()
 
-        print("="*24)
+        print("=" * 24)
 
     def print_debug_info_for_call(self, call_result: CompletedProcess):
             print(f"Command: {call_result.args}")
@@ -107,7 +104,7 @@ class CLI:
         index = str(self._tmpfile_auto_increment[normalized])
         self._tmpfile_auto_increment[normalized] += 1
 
-        filename = index + "-" + normalized
+        filename = normalized + "-" + index
         if len(normalized) == 0:
             filename = index
 
@@ -139,98 +136,3 @@ class CLI:
 @pytest.fixture
 def cli(tmpdir):
     yield CLI("tpl", tmpdir)
-
-
-def test_source_environment(cli):
-    p = cli("-e", cli.path_for_content("{{FOO}}"), env={"FOO": "bar"})
-    assert p.stdout == "bar\n"
-
-
-def test_unicode_var(cli):
-    p = cli("-e", cli.path_for_content("{{FOO}}"), env={"FOO": "🐍"})
-    assert p.stdout == "🐍\n"
-
-
-def test_shadowing_json_env(cli):
-    p = cli(
-        "--json", cli.path_for_json({"FOO": "json"}),
-        "-e",
-        cli.path_for_content("{{FOO}}"),
-        env={"FOO": "env"}
-    )
-    assert p.stdout == "env\n"
-
-
-def test_shadowing_yaml_env(cli):
-    p = cli(
-        "--yaml", cli.path_for_yaml({"FOO": "yaml"}),
-        "-e",
-        cli.path_for_content("{{FOO}}"),
-        env={"FOO": "env"}
-    )
-    assert p.stdout == "env\n"
-
-
-def test_yaml_flow_style(cli):
-    p = cli(
-        "--yaml", cli.path_for_content('{"FOO": "yaml"}'),
-        cli.path_for_content("{{FOO}}")
-    )
-    assert p.stdout == "yaml\n"
-
-
-def test_environment_by_default(cli):
-    p = cli(
-        cli.path_for_content("{{FOO}}"),
-        env={"FOO": "bar"}
-    )
-    assert p.stdout == "bar\n"
-
-
-def test_corrupt_yaml(cli):
-    p = cli(
-        "--yaml", cli.path_for_content('{"FOO": "not properly closed'),
-        cli.path_for_content("{{FOO}}")
-    )
-    assert p.returncode == 1
-
-
-def test_corrupt_json(cli):
-    p = cli(
-        "--json", cli.path_for_content('{"FOO": "not properly closed'),
-        cli.path_for_content("{{FOO}}")
-    )
-    assert p.returncode == 1
-
-
-def test_usage_and_error_without_arguments(cli):
-    p = cli()
-    assert p.returncode == 64  # EX_USAGE
-    assert p.stderr.startswith("No template")
-    assert "Usage" in p.stderr
-
-
-def test_help_on_h(cli):
-    p = cli("-h")
-    assert p.returncode == 0
-    assert "Usage:" in p.stderr
-    assert "Options:" in p.stderr
-
-
-def test_help_on_help(cli):
-    p = cli("--help")
-    assert p.returncode == 0
-    assert "Usage:" in p.stderr
-    assert "Options:" in p.stderr
-
-
-def test_version_on_v(cli):
-    p = cli("-v")
-    assert p.returncode == 0
-    assert "tpl - " in p.stdout
-
-
-def test_version_on_version(cli):
-    p = cli("--version")
-    assert p.returncode == 0
-    assert "tpl - " in p.stdout

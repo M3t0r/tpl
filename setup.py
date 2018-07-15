@@ -29,10 +29,21 @@ setup(
     version=git_version_string,
     author='Simon Lutz Brüggen',
     description="Render templates with data from various sources",
+    url="https://github.com/m3t0r/tpl",
     long_description=readme_text,
+    long_description_content_type="text/markdown",
     install_requires=["pyyaml", "jinja2"],
     entry_points={
         'console_scripts': ["tpl=tpl:main"]
     },
-    packages=["tpl"]
+    packages=["tpl"],
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Environment :: Console",
+        "Operating System :: Unix",
+        "Programming Language :: Python :: 3",
+        "Intended Audience :: Developers",
+        "Intended Audience :: System Administrators",
+        "License :: OSI Approved :: MIT License",
+    ]
 )

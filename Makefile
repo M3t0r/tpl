@@ -37,7 +37,7 @@ check-releasable-git-state:
 release: check-releasable-git-state test zipapp docker wheel
 	@# check if there are no further changes not commited to git in $(SourceFiles)
 	@echo " ==>" `tput setaf 3`Releasing`tput sgr0` tag `tput setaf 4;./setup.py -V;tput sgr0` to PyPI and DockerHub.
-	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/tpl-`./setup.py -V`*
 	docker push "tpl:v`./setup.py -V`"
 	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;./setup.py -V;tput sgr0` to PyPI and DockerHub.
 

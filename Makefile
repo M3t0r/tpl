@@ -23,6 +23,24 @@ codestyle:
 
 all: test zipapp # this is not all but the ones we recommend
 
+check-releasable-git-state:
+	# check if there are changes staged to be commited
+	git diff --cached --stat --exit-code
+	# check if there are any changes to tracked files
+	git diff --stat --exit-code
+	# check if there are untracked files in tpl/ and tests/
+	! git status --porcelain=2 | grep -E "\\? [\"']?(tpl|tests)/"
+	# check if the current state is tagged in git
+	git describe --tags --exact
+	@echo " ==>" git state is `tput setaf 2`releasable`tput sgr0`
+
+release: check-releasable-git-state test zipapp docker wheel
+	@# check if there are no further changes not commited to git in $(SourceFiles)
+	@echo " ==>" `tput setaf 3`Releasing`tput sgr0` tag `tput setaf 4;./setup.py -V;tput sgr0` to PyPI and DockerHub.
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	docker push "tpl:v`./setup.py -V`"
+	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;./setup.py -V;tput sgr0` to PyPI and DockerHub.
+
 install: $(SourceFiles)
 	python -m pip install ./
 

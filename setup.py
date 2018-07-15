@@ -8,7 +8,11 @@ from setuptools import setup
 with open("./README.md") as readme:
     readme_text = readme.read()
 
-with popen("git describe --tags --dirty | sed 's/^v//'", "r") as git_output:
+with popen(
+        "git describe --tags --dirty --match 'v*' "
+        "| sed -e 's/^v//' -e 's/-/_/g' -e 's/_/+/1' -e 's/_/./g'",
+        "r"
+) as git_output:
     git_version_string = git_output.readline()[:-1]  # truncate the \n
 
     # update version file

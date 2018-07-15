@@ -2,14 +2,26 @@ DistFolder := ./dist
 BuildFolder := ./build
 SourceFiles := setup.py ./tpl/*.py
 
-test:
-	-flake8 tpl/ tests/
+zipapp: $(DistFolder)/tpl
+
+docker: zipapp Dockerfile
+	docker build -t "tpl:v`./setup.py -V`" ./
+	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
+
+wheel:
+	python3 ./setup.py sdist bdist_wheel
+	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
+
+test: codestyle
 	pytest ./tests
 
-all: test $(DistFolder)/tpl docker
+codestyle:
+	flake8 --max-line-length=88 tpl/
+	@# we have to ingore 401 and 811 because of the way that pytest
+	@# fixtures work
+	-flake8 --ignore=F401,F811 --max-line-length=88 tests/ && echo " ==>" Codestyle is `tput setaf 2`conforming`tput sgr0`.
 
-docker: $(DistFolder)/tpl Dockerfile
-	docker build -t "tpl:v`./setup.py -V`" ./
+all: test zipapp # this is not all but the ones we recommend
 
 install: $(SourceFiles)
 	python -m pip install ./

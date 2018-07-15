@@ -32,7 +32,7 @@ setup(
     url="https://github.com/m3t0r/tpl",
     long_description=readme_text,
     long_description_content_type="text/markdown",
-    install_requires=["pyyaml", "jinja2"],
+    install_requires=["pyyaml>=3.13", "jinja2>=2.10"],
     entry_points={
         'console_scripts': ["tpl=tpl:main"]
     },

@@ -45,7 +45,7 @@ install: $(SourceFiles)
 
 $(DistFolder)/tpl: $(DistFolder) $(BuildFolder) $(SourceFiles)
 	python -m pip install ./ -t $(BuildFolder)
-	python -m zipapp --python "/usr/bin/env python3" --main tpl:main --output $@ $(BuildFolder)
+	python -m zipapp --python "/usr/bin/env python3" --main tpl.__main__:_argv_wrapper --output $@ $(BuildFolder)
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`, you can now copy it somewhere into your `tput setaf 3`\$$PATH`tput sgr0`.
 
 $(DistFolder):

@@ -1,7 +1,7 @@
 # builder
 FROM python:3-alpine AS zipper
 
-RUN apk update && apk add make
+RUN apk update && apk add make git
 
 COPY ./ /app
 RUN make -C /app dist/tpl

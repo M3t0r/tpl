@@ -59,7 +59,7 @@ def main(*args):
     # combine every input
     collated_data = {}
     for data in loaded_data:
-        collated_data.update(data)
+        collated_data = merge_data(collated_data, data)
 
     # create template
     with open_file(arguments[0]) as template_stream:
@@ -98,9 +98,49 @@ def print_version():
     print(f"tpl - {__version__}")
 
 
+def merge_data(old: dict, new, array_key="_array_data", scalar_key="_scalar_data"):
+    """Merge the data from the different sources.
+
+    If the new value is a list it's elements will get appended to the list in
+    _array_data.
+
+    If the new value is a scalar (anything not a list or dict) it will replace
+    the value in _scalar_data.
+
+    if the new value is a dict it's elements will get merged with the elements
+    already present. This also means that sub dicts in both values will get
+    merged.
+    """
+    if type(new) == list:
+        # if the new value is a list append it to the list element
+        old[array_key] = old.get(array_key, []) + new
+        return old
+
+    if type(new) != dict:
+        # if the new value is not a dict use it as a scalar
+        old[scalar_key] = new
+        return old
+
+    return recursive_dict_merge(old, new)
+
+
+def recursive_dict_merge(old: dict, new: dict):
+    for key, value in new.items():
+        if key not in old:
+            old[key] = value
+        elif type(old[key]) == dict and type(value) == dict:
+            recursive_dict_merge(old[key], value)
+        else:
+            old[key] = value
+
+    return old
+
+
 def parse_input_options(type, file):
     if type in ["-e", "--environment"]:
-        return os.environ
+        # os.environ is of type environ, but if we check the type in our
+        # merge functions this has to be a dict
+        return dict(os.environ)
 
     parsers = {
         "--yaml": load_yaml_stream,

@@ -34,7 +34,7 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=["pyyaml>=3.13", "jinja2>=2.10"],
     entry_points={
-        'console_scripts': ["tpl=tpl:main"]
+        'console_scripts': ["tpl=tpl.__main__:_argv_wrapper"]
     },
     packages=["tpl"],
     classifiers=[

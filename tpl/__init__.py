@@ -11,9 +11,9 @@ import jinja2
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main(*args):
     options, arguments = getopt(
-        sys.argv[1:],
+        list(args[1:]),
         "hve",
         ["help", "version", "yaml=", "json=", "environment"]
     )

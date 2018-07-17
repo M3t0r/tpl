@@ -17,7 +17,7 @@ echo "My go-to editor is {{VISUAL}} on {{OS}}" \
 ```
 
 ## Installation
-`make install` or `pip install git+git://github.com/M3t0r/tpl.git`
+`make install` or `pip install tpl`
 
 ## Input sources
 `tpl` supports multiple sources:

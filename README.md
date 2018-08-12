@@ -1,4 +1,7 @@
 # `tpl`: Render templates with data from various sources
+
+<p><!-- badges --><a href="https://travis-ci.com/M3t0r/tpl"><img src="https://api.travis-ci.com/M3t0r/tpl.svg?branch=master" alt="travis-ci build badge"></a></p>
+
 You want to fill data into a template file?
 ```shell
 tpl --yaml data.yaml template.file > rendered.file

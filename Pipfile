@@ -1,0 +1,11 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+tpl = {editable = true, path = "."}
+
+[dev-packages]
+"flake8" = ">=3.3"
+pytest = ">=3.4"

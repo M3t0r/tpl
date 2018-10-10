@@ -49,4 +49,7 @@ Options:
   -e, --environment    Use all environment variables as data
   --json=<file>        Load JSON data from a file or STDIN
   --yaml=<file>        Load YAML data from a file or STDIN
+
+Documentation:
+  Jinja2               http://jinja.pocoo.org/docs/2.10/
 ```

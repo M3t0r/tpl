@@ -32,22 +32,3 @@ def test_version_on_version(cli):
     p = cli("--version")
     assert p.returncode == 0
     assert "tpl - " in p.stdout
-
-
-def test_current_help_in_readme(cli):
-    p = """Usage:
-  tpl [options] <template_file>
-  tpl --help
-  tpl --version
-
-Options:
-  -e, --environment    Use all environment variables as data
-  --json=<file>        Load JSON data from a file or STDIN
-  --yaml=<file>        Load YAML data from a file or STDIN
-
-Documentation:
-  Jinja2               http://jinja.pocoo.org/docs/latest/
-"""
-
-    with open("./README.md", "r") as readme:
-        assert p in readme.read()

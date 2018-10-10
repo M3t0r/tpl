@@ -85,7 +85,7 @@ def print_help():
     print_usage()
     jinja_version = jinja2.__version__
     if "dev" in jinja_version:
-        jinja_version = "latest"
+        jinja_version = "dev"
     help_text = """
 Options:
   -e, --environment    Use all environment variables as data

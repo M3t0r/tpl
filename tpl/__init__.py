@@ -83,11 +83,16 @@ def print_usage():
 
 def print_help():
     print_usage()
-    print("""
+    jinja_version = jinja2.__version__
+    help_text = """
 Options:
   -e, --environment    Use all environment variables as data
   --json=<file>        Load JSON data from a file or STDIN
-  --yaml=<file>        Load YAML data from a file or STDIN""", file=sys.stderr)
+  --yaml=<file>        Load YAML data from a file or STDIN
+
+Documentation:
+  Jinja2               http://jinja.pocoo.org/docs/{0}/"""
+    print(help_text.format(jinja_version), file=sys.stderr)
 
 
 def print_version():

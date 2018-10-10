@@ -45,11 +45,17 @@ Usage:
   tpl --help
   tpl --version
 
+
+tpl uses the Jinja2 templating engine to render it's output. You can find the
+documentation for template designers at:
+    http://jinja.pocoo.org/docs/latest/templates/
+
+If you provide multiple data sources they will be merged together. If a key is
+present in more than one source the value of the source that was specified
+last will be used.
+
 Options:
   -e, --environment    Use all environment variables as data
   --json=<file>        Load JSON data from a file or STDIN
   --yaml=<file>        Load YAML data from a file or STDIN
-
-Documentation:
-  Jinja2               http://jinja.pocoo.org/docs/latest/
 ```

@@ -84,15 +84,23 @@ def print_usage():
 def print_help():
     print_usage()
     jinja_version = jinja2.__version__
+    if "dev" in jinja_version:
+        jinja_version = "dev"
     help_text = """
+
+tpl uses the Jinja2 templating engine to render it's output. You can find the
+documentation for template designers at:
+    http://jinja.pocoo.org/docs/{jinja_version}/templates/
+
+If you provide multiple data sources they will be merged together. If a key is
+present in more than one source the value of the source that was specified
+last will be used.
+
 Options:
   -e, --environment    Use all environment variables as data
   --json=<file>        Load JSON data from a file or STDIN
-  --yaml=<file>        Load YAML data from a file or STDIN
-
-Documentation:
-  Jinja2               http://jinja.pocoo.org/docs/{0}/"""
-    print(help_text.format(jinja_version), file=sys.stderr)
+  --yaml=<file>        Load YAML data from a file or STDIN"""
+    print(help_text.format(jinja_version=jinja_version), file=sys.stderr)
 
 
 def print_version():

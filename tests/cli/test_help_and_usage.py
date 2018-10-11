@@ -32,9 +32,3 @@ def test_version_on_version(cli):
     p = cli("--version")
     assert p.returncode == 0
     assert "tpl - " in p.stdout
-
-
-def test_current_help_in_readme(cli):
-    p = cli("--help")
-    with open("./README.md", "r") as readme:
-        assert p.stderr in readme.read()

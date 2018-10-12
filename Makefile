@@ -2,27 +2,34 @@ DistFolder := ./dist
 BuildFolder := ./build
 SourceFiles := setup.py ./tpl/*.py
 
+.PHONY: zipapp
 zipapp: $(DistFolder)/tpl
 
+.PHONY: docker
 docker: zipapp Dockerfile
 	docker build -t "tpl:v`./setup.py -V`" ./
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
+.PHONY: wheel
 wheel:
 	python3 ./setup.py sdist bdist_wheel
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
+.PHONY: test
 test: codestyle
 	pytest ./tests
 
+.PHONY: codestyle
 codestyle:
 	flake8 --max-line-length=88 tpl/
 	@# we have to ingore 401 and 811 because of the way that pytest
 	@# fixtures work
 	-flake8 --ignore=F401,F811 --max-line-length=88 tests/ && echo " ==>" Codestyle is `tput setaf 2`conforming`tput sgr0`.
 
+.PHONY: all
 all: test zipapp # this is not all but the ones we recommend
 
+.PHONY: check-releasable-git-state
 check-releasable-git-state:
 	# check if there are changes staged to be commited
 	git diff --cached --stat --exit-code
@@ -34,12 +41,14 @@ check-releasable-git-state:
 	git describe --tags --exact
 	@echo " ==>" git state is `tput setaf 2`releasable`tput sgr0`
 
+.PHONY: release
 release: check-releasable-git-state test zipapp wheel
 	@# check if there are no further changes not commited to git in $(SourceFiles)
 	@echo " ==>" `tput setaf 3`Releasing`tput sgr0` tag `tput setaf 4;./setup.py -V;tput sgr0` to PyPI.
 	twine upload dist/tpl-`./setup.py -V`*
 	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;./setup.py -V;tput sgr0` to PyPI.
 
+.PHONY: install
 install: $(SourceFiles)
 	python -m pip install ./
 
@@ -53,8 +62,10 @@ $(DistFolder):
 $(BuildFolder):
 	mkdir -p $@
 
+.PHONY: clean
 clean:
 	rm -rf $(BuildFolder)
 
+.PHONY: distclean
 distclean: clean
 	rm -rf $(DistFolder)

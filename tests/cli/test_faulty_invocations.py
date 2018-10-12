@@ -9,7 +9,7 @@ def test_key_does_not_exist(cli):
         cli.path_for_content("{{FOO}}"),
         env={}
     )
-    assert p.stdout == "\n"
+    assert p.stdout == ""
 
 
 def test_corrupt_yaml(cli):

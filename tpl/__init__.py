@@ -61,15 +61,19 @@ def main(*args):
     for data in loaded_data:
         collated_data = merge_data(collated_data, data)
 
+    # set up Jinja2 environment
+    j_env = jinja2.Environment(
+        keep_trailing_newline=True
+    )
+
     # create template
     with open_file(arguments[0]) as template_stream:
-        template = jinja2.Template(template_stream.read())
+        template = j_env.from_string(template_stream.read())
         template.filename = arguments[0]
 
     # and render to output
     with open_file(arguments[1], "w") as output:
         template.stream(collated_data).dump(output)
-        output.write("\n")  # does the template eat this or the dump call?
 
     return os.EX_OK
 

@@ -54,7 +54,7 @@ class CLI:
         elif stream == "\n":
             print(" (stream is empty, containts only one newline)")
         elif stream[-1] != "\n":
-            print(" (does not end in newline")
+            print(" (does not end in newline)")
         else:
             print()
 

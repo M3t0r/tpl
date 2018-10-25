@@ -41,7 +41,7 @@ def main(*args):
     if len(arguments) > 2:
         given_arguments = ", ".join(['"'+a+'"' for a in arguments])
         logger.error(
-            f"We don't support more than two arguments: {given_arguments}"
+            "We don't support more than two arguments: {}".format(given_arguments)
         )
         return os.EX_USAGE
 
@@ -112,7 +112,7 @@ def print_version():
     # This is the same way that `less` does it under macOS, even though thats
     # probably not a good reason.
     from .__version__ import __version__
-    print(f"tpl - {__version__}")
+    print("tpl - {}".format(__version__))
 
 
 def merge_data(old: dict, new, array_key="_array_data", scalar_key="_scalar_data"):

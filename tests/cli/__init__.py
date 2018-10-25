@@ -30,11 +30,15 @@ class CLI:
             timeout=EXECUTION_TIMEOUT,
             stdout=PIPE,
             stderr=PIPE,
-            input=str(stdin),
-            encoding=encoding,
+            input=str(stdin).encode(encoding),
             env=env,
-            cwd=self.tmpdir
+            cwd=str(self.tmpdir)
         )
+
+        # Python 3.5 doesn't support the `encoding` argument to `run()`,
+        # so we have to manually decode the byte strings
+        result.stdout = result.stdout.decode(encoding)
+        result.stderr = result.stderr.decode(encoding)
 
         if self._print_debug_output:
             self.print_debug_info_for_call(result)
@@ -44,13 +48,13 @@ class CLI:
         stream = getattr(call_result, stream_name.lower())
         name = stream_name.upper()
 
-        print(f"{name}:", end="")
+        print(name+":", end="")
         if len(stream) == 0:
             print(" (stream is empty)")
         elif stream == "\n":
             print(" (stream is empty, containts only one newline)")
         elif stream[-1] != "\n":
-            print(" (does not end in newline")
+            print(" (does not end in newline)")
         else:
             print()
 
@@ -66,8 +70,8 @@ class CLI:
         print("=" * 24)
 
     def print_debug_info_for_call(self, call_result: CompletedProcess):
-            print(f"Command: {call_result.args}")
-            print(f"Return code: {call_result.returncode}")
+            print("Command:", call_result.args)
+            print("Return code:", call_result.returncode)
 
             self._print_stream_output(call_result, "stdout")
             self._print_stream_output(call_result, "stderr")
@@ -78,15 +82,15 @@ class CLI:
     def folder_tree(self, path=None):
         if path is None:
             path = self.tmpdir
-        path = Path(path)
+        path = Path(str(path))
         return "./\n" + "\n".join(self._folder_structure_recursive(path))
 
     def _folder_structure_recursive(self, path: Path):
         for item in path.iterdir():
-            yield f"|-- {item.name}"
+            yield "|-- " + item.name
             if item.is_dir():
                 for line in self._folder_structure_recursive(item):
-                    yield f"|   {line}"
+                    yield "|   " + line
 
     def _normalize_filename(self, name):
         allowed_chars = (
@@ -108,7 +112,7 @@ class CLI:
         if len(normalized) == 0:
             filename = index
 
-        return Path(self.tmpdir, filename)
+        return Path(str(self.tmpdir), filename)
 
     def path_for_content(self, file_content, encoding="UTF-8", name="") -> Path:
         if name == "":

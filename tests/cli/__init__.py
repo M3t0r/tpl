@@ -30,11 +30,15 @@ class CLI:
             timeout=EXECUTION_TIMEOUT,
             stdout=PIPE,
             stderr=PIPE,
-            input=str(stdin),
-            encoding=encoding,
+            input=str(stdin).encode(encoding),
             env=env,
-            cwd=self.tmpdir
+            cwd=str(self.tmpdir)
         )
+
+        # Python 3.5 doesn't support the `encoding` argument to `run()`,
+        # so we have to manually decode the byte strings
+        result.stdout = result.stdout.decode(encoding)
+        result.stderr = result.stderr.decode(encoding)
 
         if self._print_debug_output:
             self.print_debug_info_for_call(result)

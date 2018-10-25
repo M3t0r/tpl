@@ -112,7 +112,7 @@ class CLI:
         if len(normalized) == 0:
             filename = index
 
-        return Path(self.tmpdir, filename)
+        return Path(str(self.tmpdir), filename)
 
     def path_for_content(self, file_content, encoding="UTF-8", name="") -> Path:
         if name == "":

@@ -44,7 +44,7 @@ class CLI:
         stream = getattr(call_result, stream_name.lower())
         name = stream_name.upper()
 
-        print(f"{name}:", end="")
+        print(name+":", end="")
         if len(stream) == 0:
             print(" (stream is empty)")
         elif stream == "\n":
@@ -66,8 +66,8 @@ class CLI:
         print("=" * 24)
 
     def print_debug_info_for_call(self, call_result: CompletedProcess):
-            print(f"Command: {call_result.args}")
-            print(f"Return code: {call_result.returncode}")
+            print("Command:", call_result.args)
+            print("Return code:", call_result.returncode)
 
             self._print_stream_output(call_result, "stdout")
             self._print_stream_output(call_result, "stderr")
@@ -78,15 +78,15 @@ class CLI:
     def folder_tree(self, path=None):
         if path is None:
             path = self.tmpdir
-        path = Path(path)
+        path = Path(str(path))
         return "./\n" + "\n".join(self._folder_structure_recursive(path))
 
     def _folder_structure_recursive(self, path: Path):
         for item in path.iterdir():
-            yield f"|-- {item.name}"
+            yield "|-- " + item.name
             if item.is_dir():
                 for line in self._folder_structure_recursive(item):
-                    yield f"|   {line}"
+                    yield "|   " + line
 
     def _normalize_filename(self, name):
         allowed_chars = (

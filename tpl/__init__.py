@@ -98,7 +98,7 @@ documentation for template designers at:
 
 If you provide multiple data sources they will be merged together. If a key is
 present in more than one source the value of the source that was specified
-last will be used.
+last will be used. Nested object will be merged with the same algorithm.
 
 Options:
   -e, --environment    Use all environment variables as data

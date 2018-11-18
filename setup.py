@@ -5,7 +5,7 @@ from os import popen
 from setuptools import setup
 
 
-with open("./README.md") as readme:
+with open("./README.rst") as readme:
     readme_text = readme.read()
 
 with popen(
@@ -31,7 +31,6 @@ setup(
     description="Render templates with data from various sources",
     url="https://github.com/m3t0r/tpl",
     long_description=readme_text,
-    long_description_content_type="text/markdown",
     python_requires=">3.5",
     install_requires=["pyyaml>=3.13", "jinja2>=2.10"],
     entry_points={

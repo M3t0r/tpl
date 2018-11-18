@@ -15,6 +15,13 @@ wheel:
 	python3 ./setup.py sdist bdist_wheel
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
+.PHONY: docs documentation
+docs documentation: $(DistFolder)/tpl.1 $(BuildFolder)
+	sphinx-build -j auto -d $(BuildFolder)/sphinx -b html docs $(DistFolder)/docs
+
+$(DistFolder)/tpl.1: docs/manpage.rst
+	sphinx-build -d $(BuildFolder)/sphinx -b man -E docs $(DistFolder)
+
 .PHONY: test
 test: codestyle
 	pytest ./tests
@@ -27,7 +34,7 @@ codestyle:
 	-flake8 --ignore=F401,F811 --max-line-length=88 tests/ && echo " ==>" Codestyle is `tput setaf 2`conforming`tput sgr0`.
 
 .PHONY: all
-all: test zipapp # this is not all but the ones we recommend
+all: test zipapp documentation # this is not all but the ones we recommend
 
 .PHONY: check-releasable-git-state
 check-releasable-git-state:

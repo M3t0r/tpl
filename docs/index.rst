@@ -18,6 +18,11 @@ documentation of it's internals in the :doc:`Python API <api>` section.
     api
     license
 
+.. toctree::
+    :maxdepth: 2
+
+    changelog
+
 Indices and tables
 ==================
 

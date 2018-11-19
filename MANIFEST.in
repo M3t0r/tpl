@@ -1,0 +1,5 @@
+include Makefile LICENSE CHANGELOG.rst Pipfile Dockerfile
+
+graft tests
+graft docs
+

@@ -1,5 +1,5 @@
-`tpl`: render templates with data from various sources
-======================================================
+:program:`tpl`: render templates with data from various sources
+===============================================================
 
 .. highlight:: bash
 
@@ -42,7 +42,7 @@ Installation
 Input sources
 -------------
 
-`tpl` supports multiple sources:
+:program:`tpl` supports multiple sources:
  * YAML files (``--yaml <file>``)
  * JSON files (``--json <file>``)
  * environment variables (``--environment``)

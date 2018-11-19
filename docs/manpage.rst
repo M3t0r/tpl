@@ -1,7 +1,7 @@
 .. _tpl:
 
-tpl: render templates with data from various sources
-====================================================
+:program:`tpl`: render templates with data from various sources
+===============================================================
 
 Synopsis
 --------

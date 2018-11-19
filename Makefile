@@ -11,15 +11,18 @@ docker: zipapp Dockerfile
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
 .PHONY: wheel
-wheel:
+wheel: $(DistFolder)/tpl.1
 	python3 ./setup.py sdist bdist_wheel
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
 .PHONY: docs documentation
 docs documentation: $(DistFolder)/tpl.1 $(BuildFolder)
+	@echo " ==>" `tput setaf 3`Building`tput sgr0` HTML documentation for `tput setaf 4;./setup.py -V;tput sgr0`
 	sphinx-build -j auto -d $(BuildFolder)/sphinx -b html docs $(DistFolder)/docs
 
 $(DistFolder)/tpl.1: docs/manpage.rst
+	@# calling `./setup.py -V` makes sure that tpl.__version__ exists and docs/conf.py can import it
+	@echo " ==>" `tput setaf 3`Building`tput sgr0` manpage for `tput setaf 4;./setup.py -V;tput sgr0`
 	sphinx-build -d $(BuildFolder)/sphinx -b man -E docs $(DistFolder)
 
 .PHONY: test

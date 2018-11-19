@@ -4,15 +4,19 @@ Documentation contents
 ======================
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
     manpage
     cookbook
-    api
-    license
 
 Although :program:`tpl` is primarily developed as a CLI program there is some
 documentation of it's internals in the :doc:`Python API <api>` section.
+
+.. toctree::
+    :hidden:
+
+    api
+    license
 
 Indices and tables
 ==================

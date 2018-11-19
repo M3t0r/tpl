@@ -20,9 +20,3 @@ documentation of it's internals in the :doc:`Python API <api>` section.
     license
     changelog
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

@@ -9,3 +9,4 @@ tpl = {editable = true, path = "."}
 [dev-packages]
 "flake8" = ">=3.3"
 pytest = ">=3.4"
+sphinx = "*"

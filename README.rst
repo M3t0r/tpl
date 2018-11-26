@@ -1,4 +1,4 @@
-:program:`tpl`: render templates with data from various sources
+`tpl`: render templates with data from various sources
 ===============================================================
 
 .. highlight:: bash
@@ -32,7 +32,7 @@ POST it somewhere? ::
 You want to fill in a template in your CD pipeline and have access to docker? ::
 
     echo "My go-to editor is {{VISUAL}} on {{OS}}" \
-      | docker run --rm -i -e "VISUAL" -e "OS=$(uname)" M3t0r/tpl -
+      | docker run --rm -i -e "VISUAL" -e "OS=$(uname)" m3t0r/tpl -
 
 Installation
 ------------
@@ -42,7 +42,7 @@ Installation
 Input sources
 -------------
 
-:program:`tpl` supports multiple sources:
+`tpl` supports multiple sources:
  * YAML files (``--yaml <file>``)
  * JSON files (``--json <file>``)
  * environment variables (``--environment``)

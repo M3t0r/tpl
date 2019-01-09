@@ -6,7 +6,7 @@ Documentation contents
 .. toctree::
     :maxdepth: 2
 
-    manpage
+    Manpage <manpage>
     cookbook
 
 Although :program:`tpl` is primarily developed as a CLI program there is some

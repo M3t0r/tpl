@@ -48,7 +48,7 @@ class CLI:
         stream = getattr(call_result, stream_name.lower())
         name = stream_name.upper()
 
-        print(name+":", end="")
+        print(name + ":", end="")
         if len(stream) == 0:
             print(" (stream is empty)")
         elif stream == "\n":

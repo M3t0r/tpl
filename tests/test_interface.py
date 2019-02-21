@@ -5,7 +5,7 @@ import tpl
 
 
 def indent(text, prefix):
-    return "\n".join( (prefix + line for line in text.splitlines()) )
+    return "\n".join([prefix + line for line in text.splitlines()])
 
 
 def test_current_help_in_readme(capsys):
@@ -13,4 +13,4 @@ def test_current_help_in_readme(capsys):
         tpl.print_help()
     output = capsys.readouterr()
     with open("./README.rst", "r") as readme:
-        assert indent(output.err, " "*4) in readme.read()
+        assert indent(output.err, " " * 4) in readme.read()

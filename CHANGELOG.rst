@@ -3,6 +3,11 @@ Changelog
 
 Unreleased
 ----------
+*No changes yet.*
+
+v0.9
+----
+*Released on 2019-02-21*
 
   - Enabled `Loop Controls <http://jinja.pocoo.org/docs/2.10/templates/#loop-controls>`_
     and `Expression Statement <http://jinja.pocoo.org/docs/2.10/templates/#expression-statement>`_

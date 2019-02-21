@@ -26,8 +26,9 @@ $(DistFolder)/tpl.1: docs/manpage.rst
 	sphinx-build -d $(BuildFolder)/sphinx -b man -E docs $(DistFolder)
 
 .PHONY: test
+test: TEST_SELECTOR ?= ""
 test: codestyle
-	pytest ./tests
+	pytest -k ${TEST_SELECTOR} ./tests
 
 .PHONY: codestyle
 codestyle:

@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+  - Enabled `Loop Controls <http://jinja.pocoo.org/docs/2.10/templates/#loop-controls>`_
+    and `Expression Statement <http://jinja.pocoo.org/docs/2.10/templates/#expression-statement>`_
+    extensions.
   - Added documentation with `ReadTheDocs <https://tpl.readthedocs.io/>`_
     integration and a manpage. This includes a fix for `#8
     <https://github.com/M3t0r/tpl/issues/8>`_.

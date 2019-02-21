@@ -63,7 +63,8 @@ def main(*args):
 
     # set up Jinja2 environment
     j_env = jinja2.Environment(
-        keep_trailing_newline=True
+        extensions=['jinja2.ext.do', 'jinja2.ext.loopcontrols'],
+        keep_trailing_newline=True,
     )
 
     # create template

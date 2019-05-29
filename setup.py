@@ -28,6 +28,7 @@ setup(
     name='tpl',
     version=git_version_string,
     author='Simon Lutz Brüggen',
+    author_email='tpl@m3t0r.de',
     description="Render templates with data from various sources",
     url="https://github.com/m3t0r/tpl",
     long_description=readme_text,

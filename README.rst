@@ -1,8 +1,6 @@
 `tpl`: render templates with data from various sources
 ===============================================================
 
-.. highlight:: bash
-
 .. image:: https://api.travis-ci.com/M3t0r/tpl.svg?branch=master
     :target: https://travis-ci.com/M3t0r/tpl
     :alt: travis-ci build badge
@@ -15,12 +13,16 @@
     :target: https://readthedocs.org/projects/tpl/
     :alt: Documentation Status
 
-You want to fill data into a template file? ::
+You want to fill data into a template file?
+
+.. code:: bash
 
     tpl --yaml data.yaml template.file > rendered.file
 
 You have everything already set up in your environment and now you just want to
-POST it somewhere? ::
+POST it somewhere?
+
+.. code:: bash
 
     tpl structure.json \
       | curl \
@@ -29,7 +31,9 @@ POST it somewhere? ::
           -d@- \
           httpbin.org/anything
 
-You want to fill in a template in your CD pipeline and have access to docker? ::
+You want to fill in a template in your CD pipeline and have access to docker?
+
+.. code:: bash
 
     echo "My go-to editor is {{VISUAL}} on {{OS}}" \
       | docker run --rm -i -e "VISUAL" -e "OS=$(uname)" m3t0r/tpl -
@@ -49,7 +53,9 @@ Input sources
 
 You can specify multiple sources at once, but if a key is present in more than
 one then it's value will be taken from the latter source. This can be useful if
-you have default values that you want to always be present::
+you have default values that you want to always be present:
+
+.. code:: bash
 
     tpl \
       --yaml defaults.yaml \
@@ -58,9 +64,7 @@ you have default values that you want to always be present::
 
 Usage
 -----
-.. highlight:: none
-
-::
+.. code::
 
     Usage:
       tpl [options] <template_file>

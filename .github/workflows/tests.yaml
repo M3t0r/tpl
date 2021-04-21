@@ -1,0 +1,34 @@
+---
+on:
+  push: ~
+  pull_request: ~
+
+jobs:
+  tests:
+    name: Testing with ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.x']
+        include:
+        - os: windows-latest
+          python-version: 'py-3.9'
+          experimental: true
+        - os: ubuntu-latest
+          python-version: 'pypy-3.7'
+          experimental: true
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Setup
+      run: |
+        pip install pipenv
+        pipenv install --dev
+    - name: Run tests
+      continue-on-error: ${{ matrix.eperimental }}
+      run: pipenv run make test          
+

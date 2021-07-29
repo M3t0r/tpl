@@ -1,9 +1,9 @@
 `tpl`: render templates with data from various sources
 ===============================================================
 
-.. image:: https://api.travis-ci.com/M3t0r/tpl.svg?branch=master
-    :target: https://travis-ci.com/M3t0r/tpl
-    :alt: travis-ci build badge
+.. image:: https://github.com/M3t0r/tpl/actions/workflows/tests.yaml/badge.svg
+    :target: https://github.com/M3t0r/tpl/actions/workflows/tests.yaml
+    :alt: GitHub Actions build badge
 
 .. image:: https://img.shields.io/pypi/v/tpl.svg
     :target: https://pypi.python.org/pypi/tpl/

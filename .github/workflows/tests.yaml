@@ -14,7 +14,7 @@ jobs:
         python-version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.x']
         include:
         - os: windows-latest
-          python-version: 'py-3.9'
+          python-version: '3.9'
           experimental: true
         - os: ubuntu-latest
           python-version: 'pypy-3.7'

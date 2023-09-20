@@ -7,6 +7,7 @@ jobs:
   tests:
     name: Testing with ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.eperimental == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -26,6 +27,5 @@ jobs:
         pip install pipenv
         pipenv install --dev
     - name: Run tests
-      continue-on-error: ${{ matrix.eperimental }}
       run: pipenv run make test          
 

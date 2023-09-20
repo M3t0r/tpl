@@ -18,10 +18,11 @@ jobs:
           python-version: '3.11'
           experimental: true
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pipenv'
     - name: Setup
       run: |
         pip install pipenv

@@ -1,0 +1,53 @@
+[project]
+name = "tpl"
+dynamic = ["version"]
+description = "Render templates with data from various sources"
+authors = [
+    {name = "Simon Lutz Brüggen", email = "tpl@m3t0r.de"},
+]
+dependencies = [
+    "pyyaml>=3.13",
+    "jinja2>=2.10.1",
+]
+requires-python = ">=3.9"
+readme = "README.rst"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "https://github.com/m3t0r/tpl"
+
+[project.scripts]
+tpl = "tpl.__main__:_argv_wrapper"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "tpl/__version__.py"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "flake8>=3.3",
+    "pytest>=3.4",
+    "sphinx",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]

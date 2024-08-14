@@ -53,9 +53,9 @@ check-releasable-git-state:
 .PHONY: release
 release: check-releasable-git-state test zipapp wheel
 	@# check if there are no further changes not commited to git in $(SourceFiles)
-	@echo " ==>" `tput setaf 3`Releasing`tput sgr0` tag `tput setaf 4;./setup.py -V;tput sgr0` to PyPI.
-	twine upload dist/tpl-`./setup.py -V`*
-	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;./setup.py -V;tput sgr0` to PyPI.
+	@echo " ==>" `tput setaf 3`Releasing`tput sgr0` tag `tput setaf 4;rye version;tput sgr0` to PyPI.
+	rye publish dist/tpl-`rye version`*
+	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;rye version;tput sgr0` to PyPI.
 
 $(DistFolder)/tpl: $(DistFolder) $(BuildFolder) $(SourceFiles)
 	rye run python -m pip install ./ -t $(BuildFolder)

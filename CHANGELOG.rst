@@ -6,13 +6,14 @@ Unreleased
 *No changes yet.*
 
 v0.10
-----
-*Released on 2024-08-20*
+-----
+*Released on 2024-08-14*
 
   - Switched to GitHub Actions from Travis CI
   - Switched to rye from pipenv
   - Switched to ruff from flake8
   - Switched to renovate from depandabot
+  - Update Read The Docs config
 
 v0.9
 ----

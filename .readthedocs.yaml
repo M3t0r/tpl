@@ -1,0 +1,16 @@
+version: 2
+
+build:
+  os: ubuntu-lts-latest
+  commands:
+    - asdf plugin add rye
+    - asdf install rye latest
+    - asdf global rye latest
+    - rye sync
+    - make docs
+    - mkdir -p ${READTHEDOCS_OUTPUT}
+    - mv dist/docs "${READTHEDOCS_OUTPUT}/html"
+
+sphinx:
+  configuration: docs/conf.py
+  fail_on_warning: false

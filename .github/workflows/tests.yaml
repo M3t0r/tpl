@@ -34,4 +34,4 @@ jobs:
     - name: Install dependencies
       run: rye sync
     - name: Run tests
-      run: rye run pytest
+      run: make test

@@ -41,10 +41,14 @@ version-file = "tpl/__version__.py"
 [tool.rye]
 managed = true
 dev-dependencies = [
-    "flake8>=3.3",
     "pytest>=3.4",
     "sphinx",
+    "ruff>=0.5.7",
+    "pip>=24.2",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["F401", "F811"] # pytest needs this
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

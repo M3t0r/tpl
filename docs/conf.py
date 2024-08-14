@@ -19,11 +19,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'tpl'
-copyright = '2018, Simon Lutz Brüggen'
-author = 'Simon Lutz Brüggen'
-
 from tpl.__version__ import __version__ as tpl_release_string
+
+project = "tpl"
+copyright = "2018, Simon Lutz Brüggen"
+author = "Simon Lutz Brüggen"
+
 # The short X.Y version
 version, _, _ = tpl_release_string.partition("+")
 # The full version, including alpha/beta/rc tags

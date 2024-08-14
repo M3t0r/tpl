@@ -129,12 +129,12 @@ def merge_data(old: dict, new, array_key="_array_data", scalar_key="_scalar_data
     already present. This also means that sub dicts in both values will get
     merged.
     """
-    if type(new) == list:
+    if type(new) is list:
         # if the new value is a list append it to the list element
         old[array_key] = old.get(array_key, []) + new
         return old
 
-    if type(new) != dict:
+    if type(new) is not dict:
         # if the new value is not a dict use it as a scalar
         old[scalar_key] = new
         return old
@@ -146,7 +146,7 @@ def recursive_dict_merge(old: dict, new: dict):
     for key, value in new.items():
         if key not in old:
             old[key] = value
-        elif type(old[key]) == dict and type(value) == dict:
+        elif type(old[key]) is dict and type(value) is dict:
             recursive_dict_merge(old[key], value)
         else:
             old[key] = value

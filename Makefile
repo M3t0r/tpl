@@ -1,41 +1,39 @@
 DistFolder := ./dist
 BuildFolder := ./build
-SourceFiles := setup.py ./tpl/*.py
+SourceFiles := ./tpl/*.py
 
 .PHONY: zipapp
 zipapp: $(DistFolder)/tpl
 
 .PHONY: docker
 docker: zipapp Dockerfile
-	docker build -t "tpl:v`./setup.py -V`" ./
+	docker build -t "tpl:v`rye version`" ./
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
 .PHONY: wheel
 wheel: $(DistFolder)/tpl.1
-	python3 ./setup.py sdist bdist_wheel
+	rye build --wheel --sdist
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`.
 
 .PHONY: docs documentation
 docs documentation: $(DistFolder)/tpl.1 $(BuildFolder)
 	@echo " ==>" `tput setaf 3`Building`tput sgr0` HTML documentation for `tput setaf 4;./setup.py -V;tput sgr0`
-	sphinx-build -j auto -d $(BuildFolder)/sphinx -b html docs $(DistFolder)/docs
+	rye run sphinx-build -j auto -d $(BuildFolder)/sphinx -b html docs $(DistFolder)/docs
 
 $(DistFolder)/tpl.1: docs/manpage.rst
 	@# calling `./setup.py -V` makes sure that tpl.__version__ exists and docs/conf.py can import it
-	@echo " ==>" `tput setaf 3`Building`tput sgr0` manpage for `tput setaf 4;./setup.py -V;tput sgr0`
-	sphinx-build -d $(BuildFolder)/sphinx -b man -E docs $(DistFolder)
+	@echo " ==>" `tput setaf 3`Building`tput sgr0` manpage for `tput setaf 4;rye version;tput sgr0`
+	rye run sphinx-build -d $(BuildFolder)/sphinx -b man -E docs $(DistFolder)
 
 .PHONY: test
 test: TEST_SELECTOR ?= ""
 test: codestyle
-	pytest -k ${TEST_SELECTOR} ./tests
+	rye run pytest -k ${TEST_SELECTOR} ./tests
 
 .PHONY: codestyle
 codestyle:
-	flake8 --max-line-length=88 tpl/
-	@# we have to ingore 401 and 811 because of the way that pytest
-	@# fixtures work
-	-flake8 --ignore=F401,F811 --max-line-length=88 tests/ && echo " ==>" Codestyle is `tput setaf 2`conforming`tput sgr0`.
+	rye run ruff check
+	@echo " ==>" Codestyle is `tput setaf 2`conforming`tput sgr0`.
 
 .PHONY: all
 all: test zipapp documentation # this is not all but the ones we recommend
@@ -59,13 +57,9 @@ release: check-releasable-git-state test zipapp wheel
 	twine upload dist/tpl-`./setup.py -V`*
 	@echo " ==>" `tput setaf 2`Released`tput sgr0` version `tput setaf 4;./setup.py -V;tput sgr0` to PyPI.
 
-.PHONY: install
-install: $(SourceFiles)
-	python -m pip install ./
-
 $(DistFolder)/tpl: $(DistFolder) $(BuildFolder) $(SourceFiles)
-	python -m pip install ./ -t $(BuildFolder)
-	python -m zipapp --python "/usr/bin/env python3" --main tpl.__main__:_argv_wrapper --output $@ $(BuildFolder)
+	rye run python -m pip install ./ -t $(BuildFolder)
+	rye run python -m zipapp --python "/usr/bin/env python3" --main tpl.__main__:_argv_wrapper --output $@ $(BuildFolder)
 	@echo " ==>" `tput setaf 2`Succesfully`tput sgr0` build `tput setaf 4`$@`tput sgr0`, you can now copy it somewhere into your `tput setaf 3`\$$PATH`tput sgr0`.
 
 $(DistFolder):
